@@ -10,7 +10,7 @@ function App() {
         laboriosam expedita voluptas voluptatem perspiciatis vitae cupiditate
         ullam quis autem facilis iste porro!
       </p>
-      <button>click me</button>
+      <button onClick={()=>alert("we made it! Horay!")}>click me</button>
     </div>
   );
 }
