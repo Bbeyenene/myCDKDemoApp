@@ -29,13 +29,7 @@ jobs:
       - name: Install AWS CDK
         run: npm install -g aws-cdk
 
-      - name: Configure AWS credentials (OIDC)
-        uses: aws-actions/configure-aws-credentials@v3
-        with:
-          role-to-assume: arn:aws:iam::649455151029:role/githubASction
-          role-session-name: github-actions-cdk
-          aws-region: us-east-1
-          - name: 🔍 Debug OIDC Context
+      - name: 🔍 Debug OIDC Context
         run: |
           echo "Repository: $GITHUB_REPOSITORY"
           echo "Ref: $GITHUB_REF"
@@ -45,6 +39,14 @@ jobs:
           echo "Actual aud claim: $OIDC_CLAIM_aud"
           echo "Actual iat claim: $OIDC_CLAIM_iat"
           echo "Actual exp claim: $OIDC_CLAIM_exp"
+
+      - name: Configure AWS credentials (OIDC)
+        uses: aws-actions/configure-aws-credentials@v3
+        with:
+          role-to-assume: arn:aws:iam::649455151029:role/githubASction
+          role-session-name: github-actions-cdk
+          aws-region: us-east-1
+
       - name: Build CDK
         run: npm run build
 
