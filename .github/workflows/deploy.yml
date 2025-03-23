@@ -1,4 +1,4 @@
-name: Deploy CDK + Frontend + Backend
+name: Deploy CDK via GitHub OIDC
 
 on:
   push:
@@ -11,45 +11,44 @@ jobs:
     runs-on: ubuntu-latest
 
     permissions:
-      id-token: write
+      id-token: write   # Required for OIDC authentication
       contents: read
 
     steps:
-      - name: Checkout repo
+      - name: 📥 Checkout code
         uses: actions/checkout@v3
 
-      - name: Setup Node.js
+      - name: ⚙️ Setup Node.js
         uses: actions/setup-node@v3
         with:
           node-version: '18'
 
-      - name: Install root dependencies
+      - name: 📦 Install root dependencies
         run: npm install
 
-      - name: Install AWS CDK
+      - name: 📐 Install AWS CDK CLI
         run: npm install -g aws-cdk
 
-      - name: Configure AWS credentials (OIDC)
+      - name: 🔍 Debug GitHub OIDC context
+        run: |
+          echo "GITHUB_REPOSITORY=$GITHUB_REPOSITORY"
+          echo "GITHUB_REF=$GITHUB_REF"
+          echo "Expected sub: repo:$GITHUB_REPOSITORY:ref:$GITHUB_REF"
+          echo "OIDC sub: $OIDC_CLAIM_sub"
+          echo "OIDC aud: $OIDC_CLAIM_aud"
+
+      - name: 🔐 Configure AWS credentials (OIDC)
         uses: aws-actions/configure-aws-credentials@v3
         with:
           role-to-assume: arn:aws:iam::649455151029:role/githubASction
           role-session-name: github-actions-cdk
           aws-region: us-east-1
 
-      # 🔧 CDK Build + Deploy
-      - name: Build CDK App
+      - name: 🛠️ Build CDK
         run: npm run build
 
-      - name: Bootstrap CDK (safe to run every time)
+      - name: 🚀 Bootstrap CDK
         run: cdk bootstrap
 
-      - name: Deploy Backend Stack
-        run: cdk deploy BackendStack --require-approval never
-
-      - name: Deploy Frontend Stack
-        run: |
-          cd frontend
-          npm install
-          npm run build
-          cd ..
-          cdk deploy FrontendStack --require-approval never
+      - name: 🚚 Deploy all stacks
+        run: cdk deploy --all --require-approval never
