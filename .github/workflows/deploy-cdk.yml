@@ -35,7 +35,16 @@ jobs:
           role-to-assume: arn:aws:iam::649455151029:role/githubASction
           role-session-name: github-actions-cdk
           aws-region: us-east-1
-
+          - name: 🔍 Debug OIDC Context
+        run: |
+          echo "Repository: $GITHUB_REPOSITORY"
+          echo "Ref: $GITHUB_REF"
+          echo "Expected sub claim: repo:$GITHUB_REPOSITORY:ref:$GITHUB_REF"
+          echo "Actual sub claim: $OIDC_CLAIM_sub"
+          echo "Actual iss claim: $OIDC_CLAIM_iss"
+          echo "Actual aud claim: $OIDC_CLAIM_aud"
+          echo "Actual iat claim: $OIDC_CLAIM_iat"
+          echo "Actual exp claim: $OIDC_CLAIM_exp"
       - name: Build CDK
         run: npm run build
 
