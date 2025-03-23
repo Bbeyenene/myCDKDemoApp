@@ -14,6 +14,11 @@ function App() {
         officia praesentium inventore, facere molestias dolor necessitatibus
         laboriosam exp!
       </p>
+      <ul>
+        <li>one</li>
+        <li>two</li>
+        <li>three</li>
+      </ul>
       <button onClick={()=>alert("we made it! Horay!")}>click me</button>
     </div>
   );
