@@ -13,8 +13,7 @@ function App() {
       <p>
         Lorem, ipsum dolor sit amet consectetur adipisicing elit. Perferendis id
         officia praesentium inventore, facere molestias dolor necessitatibus
-        laboriosam expedita voluptas voluptatem perspiciatis vitae cupiditate
-        ullam quis autem facilis iste porro!
+        laboriosam exp!
       </p>
       <button onClick={()=>alert("we made it! Horay!")}>click me</button>
     </div>
