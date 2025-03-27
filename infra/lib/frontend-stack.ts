@@ -18,7 +18,7 @@ export class FrontendStack extends Stack {
     });
 
     new s3deploy.BucketDeployment(this, 'DeployReactApp', {
-      sources: [s3deploy.Source.asset(path.resolve(__dirname, '../frontend/dist'))],
+      sources: [s3deploy.Source.asset(path.resolve(__dirname, '../../packages/frontend/dist'))],
       destinationBucket: websiteBucket,
     });
 

@@ -8,7 +8,7 @@ export class BackendStack extends Stack {
   constructor(scope: Construct, id: string, props?: StackProps) {
     super(scope, id, props);
 
-    const lambdaPath = path.resolve(__dirname, '../backend');
+    const lambdaPath = path.resolve(__dirname, '../../packages/backend');
 
     const apiFunction = new lambda.Function(this, 'ApiFunction', {
       runtime: lambda.Runtime.NODEJS_18_X,
